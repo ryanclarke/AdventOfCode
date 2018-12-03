@@ -1,0 +1,1 @@
+System.IO.File.ReadLines("input/1.txt") |> Seq.sumBy int |> printfn "%d"

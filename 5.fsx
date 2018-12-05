@@ -17,7 +17,7 @@ let cancelAllPolarities polymer =
     |> List.length
 
 let initialPolymer =
-    ["abBAcfg"]
+    System.IO.File.ReadLines("input/5.txt")
     |> Seq.head
     |> Seq.toList
 

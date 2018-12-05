@@ -1,27 +1,23 @@
 open System
 
 let reactsWith a b =
-    Char.ToLower a = Char.ToLower b && Char.IsLower a <> Char.IsLower b
+    Char.ToLower a = Char.ToLower b && a <> b
 
-let polymerFolder (state:char list) (c:char) =
-    match state |> List.isEmpty with
-    | true -> [c]
-    | false ->
-        state
-        |> List.head
-        |> reactsWith c
-        |> fun x ->
-            match x with
-            | true -> state |> List.skip 1
-            | false -> c :: state
+let polymerReactor (state:char list) (c:char) : char list =
+    match state with
+    | [] -> [c]
+    | x :: tail ->
+        match x |> reactsWith c with
+        | true -> tail
+        | false -> c :: state
 
 let cancelAllPolarities polymer =
     polymer
-    |> List.fold polymerFolder List.empty
+    |> List.fold polymerReactor []
     |> List.length
 
 let initialPolymer =
-    System.IO.File.ReadLines("input/5.txt")
+    ["abBAcfg"]
     |> Seq.head
     |> Seq.toList
 

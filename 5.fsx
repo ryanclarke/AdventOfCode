@@ -8,13 +8,13 @@ let polymerReactor (state:char list) (c:char) : char list =
     | [] -> [c]
     | x::xs -> if (x |> reactsWith c) then xs else c::state
 
-let initialPolymer =
-    System.IO.File.ReadLines("input/5.txt") |> Seq.exactlyOne
-
 let run polymer =
     polymer
     |> Seq.fold polymerReactor []
     |> Seq.length
+
+let initialPolymer =
+    System.IO.File.ReadLines("input/5.txt") |> Seq.exactlyOne
 
 let filterPolymers filter =
     initialPolymer |> Seq.filter (fun x -> toLower x <> filter)

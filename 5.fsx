@@ -1,35 +1,28 @@
-open System
+let toLower = System.Char.ToLower
 
 let reactsWith a b =
-    Char.ToLower a = Char.ToLower b && a <> b
+    toLower a = toLower b && a <> b
 
 let polymerReactor (state:char list) (c:char) : char list =
     match state with
     | [] -> [c]
-    | x :: tail ->
-        match x |> reactsWith c with
-        | true -> tail
-        | false -> c :: state
-
-let cancelAllPolarities polymer =
-    polymer
-    |> List.fold polymerReactor []
-    |> List.length
+    | x::xs -> if (x |> reactsWith c) then xs else c::state
 
 let initialPolymer =
-    System.IO.File.ReadLines("input/5.txt")
-    |> Seq.head
-    |> Seq.toList
+    System.IO.File.ReadLines("input/5.txt") |> Seq.exactlyOne
 
-let run filter =
-    initialPolymer
-    |> List.filter (fun x -> Char.ToLower x <> filter)
-    |> cancelAllPolarities
+let run polymer =
+    polymer
+    |> Seq.fold polymerReactor []
+    |> Seq.length
+
+let filterPolymers filter =
+    initialPolymer |> Seq.filter (fun x -> toLower x <> filter)
 
 let runWithFilters =
     seq { 'a' .. 'z' }
-    |> Seq.map run
+    |> Seq.map (filterPolymers >> run)
     |> Seq.min
 
-run ' ' |> printfn "Part 1: %A"
-runWithFilters |> printfn "Part 2: %A"
+printfn "Part 1: %A" <| run initialPolymer
+printfn "Part 2: %A" <| runWithFilters

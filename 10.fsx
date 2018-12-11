@@ -31,16 +31,13 @@ let update state i =
      Iteration = i}
 
 let printIt state =
-    printfn "a %d" sw.ElapsedMilliseconds
     let lights = state.Lights |> Array.map (fun x -> x.Position)
     let l = (lights |> Array.minBy (fun x -> fst x)) |> fst
     let t = (lights |> Array.minBy (fun x -> snd x)) |> snd
     let r = (lights |> Array.maxBy (fun x -> fst x)) |> fst
     let b = (lights |> Array.maxBy (fun x -> snd x)) |> snd
-    printfn "b %d" sw.ElapsedMilliseconds
     let ons =
         lights |> Set.ofSeq
-    printfn "c  %d" sw.ElapsedMilliseconds
     [| t .. b |]
     |> Array.iter (fun y ->
         [| l .. r |]

@@ -64,6 +64,24 @@ samples
 |> printfn "Part 1: %d"
 
 let opLookup =
+    let rec trimOptions (x:seq<int*(string list)>) =
+        x
+        |> Seq.sortBy (fun (k,v) -> v.Length)
+        |> Seq.fold (fun state ops -> 
+            let (disc:Set<string>),o = state
+            let op,s = ops
+            let newS = s |> Seq.filter (fun x -> disc.Contains x |> not) |> Seq.toList
+            if (newS.Length = 1)
+            then ((disc.Add s.Head),(op,newS)::o)
+            else (disc,(op,newS)::o)
+            ) (Set.empty,[])
+        |> fun (a,b) -> b
+        |> fun a ->
+            let remaining = a |> List.filter (fun (_,b) -> b.Length > 1)
+            if remaining |> List.isEmpty
+            then a
+            else trimOptions a
+
     samples
     |> Seq.groupBy (fun (k,_) -> k)
     |> Seq.map (fun (k,v) ->
@@ -71,69 +89,8 @@ let opLookup =
             |> Seq.map (fun (_,s) -> s |> Set.ofSeq)
             |> Set.intersectMany)))
     |> Seq.map (fun (k,v) -> (k,v |> Seq.toList))
-    |> Seq.sortBy (fun (k,v) -> v.Length)
-    |> Seq.fold (fun state ops -> 
-        let (disc:Set<string>),o = state
-        let op,s = ops
-        let newS = s |> Seq.filter (fun x -> disc.Contains x |> not) |> Seq.toList
-        if (newS.Length = 1)
-        then ((disc.Add s.Head),(op,newS)::o)
-        else (disc,(op,newS)::o)
-        ) (Set.empty,[])
-    |> fun (a,b) -> b
-    |> Seq.sortBy (fun (k,v) -> v.Length)
-    |> Seq.fold (fun state ops -> 
-        let (disc:Set<string>),o = state
-        let op,s = ops
-        let newS = s |> Seq.filter (fun x -> disc.Contains x |> not) |> Seq.toList
-        if (newS.Length = 1)
-        then ((disc.Add s.Head),(op,newS)::o)
-        else (disc,(op,newS)::o)
-        ) (Set.empty,[])
-    |> fun (a,b) -> b
-    |> Seq.sortBy (fun (k,v) -> v.Length)
-    |> Seq.fold (fun state ops -> 
-        let (disc:Set<string>),o = state
-        let op,s = ops
-        let newS = s |> Seq.filter (fun x -> disc.Contains x |> not) |> Seq.toList
-        if (newS.Length = 1)
-        then ((disc.Add s.Head),(op,newS)::o)
-        else (disc,(op,newS)::o)
-        ) (Set.empty,[])
-    |> fun (a,b) -> b
-    |> Seq.sortBy (fun (k,v) -> v.Length)
-    |> Seq.fold (fun state ops -> 
-        let (disc:Set<string>),o = state
-        let op,s = ops
-        let newS = s |> Seq.filter (fun x -> disc.Contains x |> not) |> Seq.toList
-        if (newS.Length = 1)
-        then ((disc.Add s.Head),(op,newS)::o)
-        else (disc,(op,newS)::o)
-        ) (Set.empty,[])
-    |> fun (a,b) -> b
-    |> Seq.sortBy (fun (k,v) -> v.Length)
-    |> Seq.fold (fun state ops -> 
-        let (disc:Set<string>),o = state
-        let op,s = ops
-        let newS = s |> Seq.filter (fun x -> disc.Contains x |> not) |> Seq.toList
-        if (newS.Length = 1)
-        then ((disc.Add s.Head),(op,newS)::o)
-        else (disc,(op,newS)::o)
-        ) (Set.empty,[])
-    |> fun (a,b) -> b
-    |> Seq.sortBy (fun (k,v) -> v.Length)
-    |> Seq.fold (fun state ops -> 
-        let (disc:Set<string>),o = state
-        let op,s = ops
-        let newS = s |> Seq.filter (fun x -> disc.Contains x |> not) |> Seq.toList
-        if (newS.Length = 1)
-        then ((disc.Add s.Head),(op,newS)::o)
-        else (disc,(op,newS)::o)
-        ) (Set.empty,[])
-    |> fun (a,b) -> b
-    |> Seq.sortBy (fun (k,v) -> v.Length)
-    |> Seq.map (fun (k,v) ->
-        (k,opcodes.[v |> List.exactlyOne]))
+    |> trimOptions
+    |> Seq.map (fun (k,v) -> (k,opcodes.[v |> List.exactlyOne]))
     |> Map.ofSeq
 
 let folder reg instruction =

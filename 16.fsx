@@ -1,6 +1,3 @@
-#load "Utils.fsx"
-open Utils
-
 let opcodes =
     let addr (a,b,c) reg = reg |> Array.mapi (fun i x -> if i = c then reg.[a] + reg.[b] else x)
     let addi (a,b,c) reg = reg |> Array.mapi (fun i x -> if i = c then reg.[a] + b else x)

@@ -7,13 +7,13 @@ let moves =
 
 let add (x1,y1) (x2,y2) = (x1+x2,y1+y2)
 
-let folder state ch =
+let folder state c =
     let pos,(map:Map<(int*int),int>),stack = state
-    match ch with
+    match c with
     | '(' -> (pos,map,pos::stack)
     | ')' -> (stack.Head,map,stack.Tail)
     | '|' -> (stack.Head,map,stack)
-    | c -> 
+    | _ -> 
         let here,dist = pos
         let dest = add here moves.[c]
         let edge = (dest,dist+1)
@@ -23,12 +23,12 @@ let folder state ch =
             else map.Add edge
         (edge,newMap,stack)
 
-let input =
-    System.IO.File.ReadAllLines("input/20.txt").[0].TrimStart('^').TrimEnd('$')
-
-input
+System.IO.File.ReadAllLines("input/20.txt").[0].TrimStart('^').TrimEnd('$')
 |> Seq.fold folder (((0,0),0),Map.empty,[])
 |> fun (_,m,_) -> m
 |> Map.toList
 |> List.sortByDescending (fun (_,d) -> d)
-|> fun x -> printfn "Part 1: %A" (snd x.Head)
+|> List.map snd
+|> fun x ->
+    printfn "Part 1: %A" x.Head
+    printfn "Part 2: %A" (x |> List.filter (fun a -> a >= 1000) |> List.length)

@@ -1,0 +1,11 @@
+TODO:
+3- Combine solutions; refactor parser to use regex Active Pattern; 
+6- WIP; In the middle of a performance refactor; still not performant; quit or finish
+7- WIP; Part 2 never solved in code
+8- Get rid of mutable rawIndex
+10- Stop at moment of truth instead of hard-coding end interation
+11- Optimize brtue force to a clever solution
+12- Don't hardcode 159 end condition
+13- Consolidate mutable values; improve domain modelling
+
+ALL- Change seq to list everywhere.

@@ -1,28 +1,26 @@
 #load "Utils.fsx"
 open Utils
 
-let moduleMasses =
-    aocInput "01"
-    |> Seq.map int
+let moduleMasses = inputFile "01" int
 
 let massToFuel mass =
     mass / 3 - 2
 
 moduleMasses
 |> Seq.sumBy massToFuel
-|> dumps "[01a] Sum of fuel requirements:"
+|> solution "01a"
 
 
-let rec fuelWithFuel (fuels:List<int>) =
+let rec fuelForFuelMass (fuels:List<int>) =
     match fuels with
-    | x::_ when x >= 9 -> fuelWithFuel ((massToFuel x)::fuels)
+    | x::_ when x >= 9 -> fuelForFuelMass ((massToFuel x)::fuels)
     | x -> x
 
-let massWithFuel mass =
+let massToFuelWithFuelMass mass =
     [ massToFuel mass ]
-    |> fuelWithFuel
+    |> fuelForFuelMass
     |> List.sum
 
 moduleMasses
-|> Seq.sumBy massWithFuel
-|> dumps "[01b] Sum of fuel requirements, counting fuel weight:"
+|> Seq.sumBy massToFuelWithFuelMass
+|> solution "01b"

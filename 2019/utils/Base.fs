@@ -1,8 +1,9 @@
 namespace Aoc
 module Base =
+    let strim (s:string) = s.Trim()
+    let ssplit chars (s:string) = s.Split(chars)
 
     let inputFile dataFile t =
-        let strim (s:string) = s.Trim()
         sprintf "input/%s.txt" dataFile
         |> System.IO.File.ReadLines
         |> Seq.map (strim >> t)

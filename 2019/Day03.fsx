@@ -64,9 +64,9 @@ let solve toDistance (input:string[]) =
 let manhattanDistance (x,y,_) = abs x + abs y
 
 input
-|> solve manhattanDistance |> solution "03a 1211"
+|> solve manhattanDistance |> solution "03a" 1211
 
 let combinedSteps (_,_,s) = s
 
 input
-|> solve combinedSteps |> solution "03b 101386"
+|> solve combinedSteps |> solution "03b" 101386

@@ -25,7 +25,7 @@ let intcodeComputer02a (input: int[]) (noun,verb) =
     memory.[0]
 
 intcodeComputer02a program (12,2)
-|> solution "02a"
+|> solution "02a" 3306701
 
 let intcodeComputer02b expected =
     square (seq {0 .. 99})
@@ -39,4 +39,4 @@ let intcodeComputer02b expected =
             None)
 
 intcodeComputer02b 19690720
-|> solution "02b"
+|> solution "02b" 7621

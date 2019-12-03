@@ -21,4 +21,10 @@ let dumprs s o = dumps s o; o
 let dumpcs (cs:seq<char>) = cs |> cstring |> dump
 
 let stopwatch = System.Diagnostics.Stopwatch.StartNew()
-let solution puzzle answer = printfn "[%06ims] %s: %A" stopwatch.ElapsedMilliseconds puzzle answer
+let solution puzzle expected actual =
+    let result =
+        if expected = actual
+        then "PASS:"
+        else sprintf "FAIL: expected %A but got" expected
+
+    printfn "[%06ims] %s %s %A" stopwatch.ElapsedMilliseconds puzzle result actual

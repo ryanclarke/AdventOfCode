@@ -8,7 +8,7 @@ let massToFuel mass =
 
 moduleMasses
 |> Seq.sumBy massToFuel
-|> solution "01a"
+|> solution "01a" 3318632
 
 
 let rec fuelForFuelMass (fuels:List<int>) =
@@ -23,4 +23,4 @@ let massToFuelWithFuelMass mass =
 
 moduleMasses
 |> Seq.sumBy massToFuelWithFuelMass
-|> solution "01b"
+|> solution "01b" 4975084

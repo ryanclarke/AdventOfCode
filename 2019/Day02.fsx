@@ -1,5 +1,5 @@
-#load "utils/Base.fs"
-open Aoc.Base
+#load "utils/Base.fsx"
+open Base
 
 let program =
     inputFile "02" string

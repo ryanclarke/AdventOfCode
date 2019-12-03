@@ -1,5 +1,5 @@
-#load "utils/Base.fs"
-open Aoc.Base
+#load "utils/Base.fsx"
+open Base
 
 let moduleMasses = inputFile "01" int
 

@@ -1,24 +1,26 @@
 #load "utils/Base.fsx"
 open Base
 
-let meetsCriteria password =
-    let digits =
+let meetsCriteria pairRequirement password =
+    let increasing =
         sprintf "%d" password
-        |> Seq.map (string >> int)
         |> Seq.pairwise
+        |> Seq.forall (fun (a,b) -> a <= b)
     
-    let increasing (a,b) = a <= b
-    let isPair (a,b) = a = b
+    let hasPairs =
+        sprintf "%d" password
+        |> Seq.groupBy id
+        |> Seq.map (fun (_,v) -> Seq.length v)
+        |> Seq.exists pairRequirement
 
-    digits |> Seq.forall increasing
-    && digits |> Seq.exists isPair
+    increasing && hasPairs
 
-let solve min max =
+let solve min max pairRequirement =
     seq {
         for i in min .. max do
-            if meetsCriteria i
+            if meetsCriteria pairRequirement i
             then yield i
     } |> Seq.length
 
-solve 123440 123460 |> solution "04a test" 7
-solve 147981 691423 |> solution "04a" 1790
+solve 147981 691423 (fun x -> x >= 2) |> solution "04a" 1790
+solve 147981 691423 (fun x -> x = 2) |> solution "04b" 1206

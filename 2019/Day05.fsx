@@ -44,7 +44,6 @@ module intcodeComputer =
         let mutable memory = Array.copy memoryx
         let mutable input = inputx
         let mutable output = []
-
         let mutable instructionPointer = 0
         
         let parameter index =
@@ -55,10 +54,9 @@ module intcodeComputer =
             | Position -> memory.[parameter index]
             | Immediate -> parameter index
 
-        let instruction modes func a b c =
-           let v = valueOf modes
-           memory.[(parameter c)] <- func (v a) (v b)
-           true
+        let debug currentOp (modes:ParameterMode[]) x =
+            // printfn "%04d %A %A ~~ %A" instructionPointer currentOp memory.[instructionPointer..(instructionPointer+modes.Length)] x
+            ()
         
         let mutable halt = false
         while (not halt) do
@@ -67,40 +65,40 @@ module intcodeComputer =
                 match currentOp with
                 | ADDN modes ->
                     let v = valueOf modes
-                    // printfn "%04d %A %A ~~ %A + %A => %A" instructionPointer currentOp memory.[instructionPointer..(instructionPointer+modes.Length)] (v 0) (v 1) memory.[(parameter 2)]
+                    debug currentOp modes (sprintf "%A + %A => %A" (v 0) (v 1) memory.[(parameter 2)])
                     memory.[(parameter 2)] <- (v 0) + (v 1)
                     instructionPointer + 1 + modes.Length
                 | MULT modes ->
                     let v = valueOf modes
-                    // printfn "%04d %A %A ~~ %A * %A => %A" instructionPointer currentOp memory.[instructionPointer..(instructionPointer+modes.Length)] (v 0) (v 1) memory.[(parameter 2)]
+                    debug currentOp modes (sprintf "%A * %A => %A" (v 0) (v 1) memory.[(parameter 2)])
                     memory.[(parameter 2)] <- (v 0) * (v 1)
                     instructionPointer + 1 + modes.Length
                 | INPT modes ->
-                    // printfn "%04d %A %A ~~ %A => %A" instructionPointer currentOp memory.[instructionPointer..(instructionPointer+modes.Length)] input.Head memory.[parameter 0]
+                    debug currentOp modes (sprintf "%A => %A" input.Head memory.[parameter 0])
                     memory.[parameter 0] <- input.Head
                     input <- input.Tail
                     instructionPointer + 1 + modes.Length
                 | OUTP modes -> 
                     let out = valueOf modes 0
-                    // printfn "%04d %A %A ~~ %A" instructionPointer currentOp memory.[instructionPointer..(instructionPointer+modes.Length)] out
+                    debug currentOp modes (sprintf "%A" out)
                     // dumps "===>" out
                     output <- out::output
                     instructionPointer + 1 + modes.Length
                 | JIFT modes -> 
                     let v = valueOf modes
-                    // printfn "%04d %A %A ~~ %A %A" instructionPointer currentOp memory.[instructionPointer..(instructionPointer+modes.Length)] (v 0) (v 1)
+                    debug currentOp modes (sprintf "%A %A" (v 0) (v 1))
                     match (v 0) <> 0 with
                     | true -> (v 1)
                     | false -> instructionPointer + 1 + modes.Length
                 | JIFF modes -> 
                     let v = valueOf modes
-                    // printfn "%04d %A %A ~~ %A %A" instructionPointer currentOp memory.[instructionPointer..(instructionPointer+modes.Length)] (v 0) (v 1)
+                    debug currentOp modes (sprintf "%A %A" (v 0) (v 1))
                     match (v 0) = 0 with
                     | true -> (v 1)
                     | false -> instructionPointer + 1 + modes.Length
                 | LESS modes -> 
                     let v = valueOf modes
-                    // printfn "%04d %A %A ~~ %A < %A => %A" instructionPointer currentOp memory.[instructionPointer..(instructionPointer+modes.Length)] (v 0) (v 1) (v 2)
+                    debug currentOp modes (sprintf "%A < %A => %A" (v 0) (v 1) (v 2))
                     memory.[(parameter 2)] <-
                         match (v 0) < (v 1) with
                         | true -> 1
@@ -108,18 +106,17 @@ module intcodeComputer =
                     instructionPointer + 1 + modes.Length
                 | EQAL modes -> 
                     let v = valueOf modes
-                    // printfn "%04d %A %A ~~ %A = %A => %A" instructionPointer currentOp memory.[instructionPointer..(instructionPointer+modes.Length)] (v 0) (v 1) (v 2)
+                    debug currentOp modes (sprintf "%A = %A => %A" (v 0) (v 1) (v 2))
                     memory.[(parameter 2)] <-
                         match (v 0) = (v 1) with
                         | true -> 1
                         | false -> 0
                     instructionPointer + 1 + modes.Length
                 | EXIT ->
-                    // printfn "%04d %A %A" instructionPointer currentOp memory.[instructionPointer]
+                    debug currentOp [||] ""
                     halt <- true
                     0
             instructionPointer <- skip
-
         output
 
 let program =
@@ -130,6 +127,9 @@ let program =
 
 intcodeComputer.run [1] program
 |> List.head |> solution "05a" 4511442
+
+intcodeComputer.run [5] program
+|> List.head |> solution "05b" 12648139
 
 intcodeComputer.run [7] [|3;9;8;9;10;9;4;9;99;-1;8|]
 |> List.head |> solution "05b.1a" 0
@@ -167,7 +167,4 @@ intcodeComputer.run [8] [|3;21;1008;21;8;20;1005;20;22;107;8;21;20;1006;20;31;11
 |> List.head |> solution "05b.7b" 1000
 intcodeComputer.run [9] [|3;21;1008;21;8;20;1005;20;22;107;8;21;20;1006;20;31;1106;0;36;98;0;0;1002;21;125;20;4;20;1105;1;46;104;999;1105;1;46;1101;1000;1;20;4;20;1105;1;46;98;99|]
 |> List.head |> solution "05b.7c" 1001
-
-intcodeComputer.run [5] program
-|> List.head |> solution "05b" 12648139
 

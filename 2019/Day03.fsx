@@ -30,7 +30,7 @@ let segmentize (x,y,steps) (vector:string) =
 
 let toSegments str =
     str
-    |> ssplit [|','|]
+    |> ssplit ","
     |> Array.mapFold segmentize (0,0,0)
     |> fst
     |> Array.toSeq

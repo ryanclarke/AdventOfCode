@@ -1,5 +1,5 @@
 let strim (s:string) = s.Trim()
-let ssplit chars (s:string) = s.Split(chars)
+let ssplit chars (s:string) = s.Split(Array.ofSeq chars)
 
 let inputFile dataFile t =
     sprintf "input/%s.txt" dataFile

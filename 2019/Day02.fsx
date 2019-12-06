@@ -4,7 +4,7 @@ open Base
 let program =
     inputFile "02" string
     |> Seq.exactlyOne
-    |> ssplit [|','|]
+    |> ssplit ","
     |> Array.map int
 
 let intcodeComputer02a (input: int[]) (noun,verb) =

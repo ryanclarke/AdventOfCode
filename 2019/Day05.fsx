@@ -122,7 +122,7 @@ module intcodeComputer =
 let program =
     inputFile "05" string
     |> Seq.exactlyOne
-    |> ssplit [|','|]
+    |> ssplit ","
     |> Array.map int
 
 intcodeComputer.run [1] program

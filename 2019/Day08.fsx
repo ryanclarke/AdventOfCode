@@ -3,8 +3,8 @@ open Base
 
 let toColor char =
     match char with
-    | '0' -> '█'
-    | '1' -> ' '
+    | '0' -> ' '
+    | '1' -> '█'
     | '2' -> '#'
     | err -> failwithf "Invalid color %A" err
 
@@ -20,8 +20,8 @@ input
     |> Array.groupBy id
     |> Map.ofArray
 )
-|> Seq.minBy (fun m -> m.['█'].Length)
-|> fun m -> m.[' '].Length * m.['#'].Length
+|> Seq.minBy (fun m -> m.[' '].Length)
+|> fun m -> m.['█'].Length * m.['#'].Length
 |> solution "08a" 2016
 
 let solve input =
@@ -42,7 +42,7 @@ let solve input =
     image
     |> Array.chunkBySize 25
     |> Array.map cstring
-    |> Array.iter (printfn "█%s")
+    |> Array.iter (printfn "%s")
     0
 
 solve input

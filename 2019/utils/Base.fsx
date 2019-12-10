@@ -29,4 +29,4 @@ let solution puzzle expected actual =
         then "PASS:"
         else sprintf "FAIL: expected %A but got" expected
 
-    printfn "[%06ims] %s %s %A" stopwatch.ElapsedMilliseconds puzzle result actual
+    printfn "[%06ims] %-6s %s %A" stopwatch.ElapsedMilliseconds puzzle result actual

@@ -11,5 +11,6 @@ open Base
 #load "Day08.fsx"
 #load "Day09.fsx"
 #load "Day10.fsx"
+#load "Day11.fsx"
 
 solution "All" 0 0

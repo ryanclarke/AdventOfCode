@@ -18,7 +18,7 @@ let dumps s (o:'a) = printfn "%s %A" s o
 let dumpf f o = f o |> dump
 let dumpr o = dump o; o
 let dumprs s o = dumps s o; o
-let dumpcs (cs:seq<char>) = cs |> cstring |> dump
+let dumpcs (cs:seq<char>) = cs |> cstring |> printfn "%s"
 
 let stopwatch = System.Diagnostics.Stopwatch.StartNew()
 let dumpts _ = printfn "[%06ims]" stopwatch.ElapsedMilliseconds

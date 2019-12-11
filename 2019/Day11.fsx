@@ -265,4 +265,4 @@ let solveB program =
 
 // PGUEPLPR
 solveB program
-|> solution "1ba" 0
+|> solution "11b" 0

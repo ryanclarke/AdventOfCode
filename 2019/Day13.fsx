@@ -248,7 +248,7 @@ let solveB program =
             | b,p when b < p -> [-1L]
             | _ -> [0L]
 
-    dumpScreen tiles score
+    // dumpScreen tiles score
     score
 
 solveB program

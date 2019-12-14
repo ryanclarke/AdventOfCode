@@ -1,5 +1,6 @@
+let sreplace (oldString:string) (newString:string) (s:string) = s.Replace (oldString,newString)
+let ssplit (splitString:string) (s:string) = s.Split ([|splitString|], System.StringSplitOptions.RemoveEmptyEntries)
 let strim (s:string) = s.Trim()
-let ssplit chars (s:string) = s.Split(Array.ofSeq chars)
 
 let inputFile dataFile t =
     sprintf "input/%s.txt" dataFile

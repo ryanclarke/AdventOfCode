@@ -22,8 +22,9 @@ let dumprs s o = dumps s o; o
 let dumpcs (cs:seq<char>) = cs |> cstring |> printfn "%s"
 
 let stopwatch = System.Diagnostics.Stopwatch.StartNew()
-let dumpts _ = printfn "[%06ims]" stopwatch.ElapsedMilliseconds
+let dumpts _ = printfn "[% 6i ms]" stopwatch.ElapsedMilliseconds
 let dumptsr (o:'a) = dumpts (); o
+let dumptss (s:string) = printfn "[% 6i ms] %s" stopwatch.ElapsedMilliseconds s
 let solution puzzle expected actual =
     let result =
         if expected = actual

@@ -117,9 +117,13 @@ solveA
 // ===================================================================================================================
 
 let solveB =
-    let o2sysPath = locationOfO2Sys |> fun c -> c.Path
-    let furthestCornerPath = createMap |> Array.collect id |> Array.map (fun c -> c.Path) |> Array.maxBy (fun p -> p.Length)
-    0
+    let o2sysPath = locationOfO2Sys |> fun c -> c.Path |> List.rev
+    let furthestCornerPath = createMap |> Array.collect id |> Array.map (fun c -> c.Path) |> Array.maxBy (fun p -> p.Length) |> List.rev
+    
+    let isCommonAtIndex i = if o2sysPath.[i] = furthestCornerPath.[i] then None else Some (i)
+    let commonPathToOrigin = Seq.initInfinite isCommonAtIndex |> Seq.choose id |> Seq.head
+
+    o2sysPath.Length + furthestCornerPath.Length - (commonPathToOrigin * 2)
 
 solveB
 |> solution "15b" 398

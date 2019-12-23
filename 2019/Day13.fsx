@@ -77,9 +77,9 @@ let solveB program =
 
         input <-
             match (xOfBall tiles,xOfPaddle tiles) with
-            | b,p when b > p -> [1]
-            | b,p when b < p -> [-1]
-            | _ -> [0]
+            | b,p when b > p -> [1L]
+            | b,p when b < p -> [-1L]
+            | _ -> [0L]
 
     // dumpScreen tiles score
     score

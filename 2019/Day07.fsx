@@ -13,22 +13,22 @@ let program =
 // 2019.07 A
 // ===================================================================================================================
 
-let rec runAmplifierA program input (phaseSettings:int list) =
+let rec runAmplifierA program input (phaseSettings:int64 list) =
     match phaseSettings with
     | currentPhase::remainingPhases -> 
-        let output = IntcodeComputer.run (currentPhase::input) (program |> Array.map int64) |> List.map int
+        let output = IntcodeComputer.run (currentPhase::input) (program |> Array.map int64)
         runAmplifierA program output remainingPhases
     | [] -> input.Head
 
 let runAmplifiersA program phaseSettings =
-    (runAmplifierA program [0] phaseSettings),phaseSettings
+    (runAmplifierA program [0L] phaseSettings),phaseSettings
 
-let allPhaseSettingOrdersA _ =
+let allPhaseSettingOrdersA =
     seq { 01234 .. 43210 }
     |> Seq.choose (fun d ->
-        let l = [d/10000;(d/1000)%10;(d/100)%10;(d/10)%10;d%10]
+        let l = [d/10000;(d/1000)%10;(d/100)%10;(d/10)%10;d%10] |> List.map int64
         l
-        |> List.filter (fun x -> x < 5)
+        |> List.filter (fun x -> x < 5L)
         |> List.distinct
         |> List.length
         |> fun x -> 
@@ -37,9 +37,11 @@ let allPhaseSettingOrdersA _ =
             | _ -> None)
 
 let solveA program =
-    allPhaseSettingOrdersA ()
+    allPhaseSettingOrdersA
     |> Seq.map (runAmplifiersA program)
     |> Seq.maxBy fst
+    |> fun (num,phases) -> int num,List.map int phases
+    
 
 solveA [|3;15;3;16;1002;16;10;16;1;16;15;15;4;15;99;0;0|]
 |> solution "07a.1" (43210,[4;3;2;1;0])
@@ -54,14 +56,14 @@ solveA program
 // 2019.07 B
 // ===================================================================================================================
 
-let rec runAmplifierB program input (phaseSettings:int list) =
+let rec runAmplifierB program input (phaseSettings:int64 list) =
     match phaseSettings with
     | currentPhase::remainingPhases -> 
-        let output = IntcodeComputer.run (currentPhase::input) program |> List.map int
+        let output = IntcodeComputer.run (currentPhase::input) program
         runAmplifierB program output remainingPhases
     | [] -> input.Head
 
-let runAmplifiersB program (phaseSettings:int[]) =
+let runAmplifiersB program (phaseSettings:int64[]) =
     let amplifierStates =
         phaseSettings
         |> Array.map (fun ps -> {            
@@ -73,7 +75,7 @@ let runAmplifiersB program (phaseSettings:int[]) =
 
     let inputs = phaseSettings |> Array.map (fun ps -> [ps])
     let addInputs index is = inputs.[index] <- List.append inputs.[index] is
-    addInputs 0 [0]
+    addInputs 0 [0L]
 
     let mutable iter = 0
     let mutable halt = false
@@ -88,18 +90,18 @@ let runAmplifiersB program (phaseSettings:int[]) =
             let outState = IntcodeComputer.execute inputs.[currIndex] inState
             amplifierStates.[currIndex] <- outState
             if iter < 4
-            then addInputs nextIndex (outState.Output |> List.map int)
-            else inputs.[nextIndex] <- (outState.Output |> List.map int)
+            then addInputs nextIndex outState.Output
+            else inputs.[nextIndex] <- outState.Output
             iter <- iter + 1
 
     (int amplifierStates.[4].Output.Head,phaseSettings)
 
-let allPhaseSettingOrdersB _ =
+let allPhaseSettingOrdersB =
     seq { 56789 .. 98765 }
     |> Seq.choose (fun d ->
-        let l = [d/10000;(d/1000)%10;(d/100)%10;(d/10)%10;d%10]
+        let l = [d/10000;(d/1000)%10;(d/100)%10;(d/10)%10;d%10] |> List.map int64
         l
-        |> List.filter (fun x -> x >= 5)
+        |> List.filter (fun x -> x >= 5L)
         |> List.distinct
         |> List.length
         |> fun x -> 
@@ -108,9 +110,10 @@ let allPhaseSettingOrdersB _ =
             | _ -> None)
 
 let solveB program =
-    allPhaseSettingOrdersB ()
+    allPhaseSettingOrdersB
     |> Seq.map (runAmplifiersB (program |> Array.map int64))
     |> Seq.maxBy fst
+    |> fun (num,phases) -> num,Array.map int phases
 
 solveB [|3;26;1001;26;-4;26;3;27;1002;27;2;27;1;27;26;27;4;27;1001;28;-1;28;1005;28;6;99;0;0;5|]
 |> solution "07b.1" (139629729,[|9;8;7;6;5|])

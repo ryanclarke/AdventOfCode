@@ -90,7 +90,7 @@ let createMap =
                     if x > maxX then maxX <- x
                     if y < minY then minY <- y
                     if y > maxY then maxY <- y
-                    let status = path |> run
+                    let status = path |> List.map int64 |> run
                     cells.[x].[y] <- {cell with Dist = path.Length; Path = path; Status = status}
         )
         // dumpScreen tick (minX,maxX,minY,maxY) cells

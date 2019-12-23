@@ -62,8 +62,7 @@ let solveA input =
             else None
         ))
     |> Array.collect (Array.choose id)
-    |> Array.map (fun (x,y) -> x*y) //printfn "%2i * %2i = %3i" x y (x*y); x * y)
-    |> Array.sum
+    |> Array.sumBy (fun (x,y) -> x*y) //printfn "%2i * %2i = %3i" x y (x*y); x * y)
 
 solveA test
 |> solution "17a.1" 76
@@ -82,9 +81,9 @@ L,10,L,12,R,6
 R,10,L,4,L,4,L,12
 L,10,R,10,R,6,L,4
 N
-"               |> Seq.map (char >> int)
+"               |> Seq.map (char >> int64)
                 |> Seq.toList
-                |> List.filter (fun i -> i <> 13)
+                |> List.filter (fun i -> i <> 13L)
                 
     let mutable memory = program file
     memory.[0] <- 2L

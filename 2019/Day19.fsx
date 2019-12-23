@@ -15,7 +15,7 @@ let initial =
 
 let solveA i =
     square [ 0 .. (i-1) ]
-    |> Seq.filter (fun (x,y) -> (IntcodeComputer.run [x;y] initial).Head = 1L)
+    |> Seq.filter (fun (x,y) -> (IntcodeComputer.run [int64 x;int64 y] initial).Head = 1L)
     |> Seq.toList
     |> List.length
 
@@ -35,7 +35,7 @@ let dumpScreen i l =
     )
     l
 
-let inBeam (x,y) = (IntcodeComputer.run [x;y] initial).Head = 1L
+let inBeam (x,y) = (IntcodeComputer.run [int64 x;int64 y] initial).Head = 1L
 
 type State = {
     Finished: bool

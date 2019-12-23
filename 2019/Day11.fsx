@@ -53,7 +53,7 @@ let emergencyHullPaintingRobot (program:int64[]) startingColor =
     setColor startingColor
 
     while not state.Halted do
-        state <- state |> IntcodeComputer.execute [getColor ()]
+        state <- state |> IntcodeComputer.execute [getColor () |> int64]
         match state.Output |> List.map int with
         | [turn;color] ->
             setColor color

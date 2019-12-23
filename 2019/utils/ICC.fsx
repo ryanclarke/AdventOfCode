@@ -12,12 +12,12 @@ module IntcodeComputer =
         let memory = Array.append program (Array.create 3000 0L)
         {Memory = memory; InstructionPointer = 0; RelativeBase = 0; Output = []; Halted = false}
 
-    let execute (input:int list) (state: Snapshot) =
+    let execute (input:int64 list) (state: Snapshot) =
         let mutable memory = state.Memory
         let mutable instructionPointer = state.InstructionPointer
         let mutable relativeBase = state.RelativeBase
         let mutable output = []
-        let mutable input = input |> List.map int64
+        let mutable input = input // |> List.map int64
 
         let getMode i =
             let divisor = (pown 10 (i + 2))
@@ -126,5 +126,5 @@ module IntcodeComputer =
     let run (input:int list) (memory: int64[]) =
         memory
         |> init
-        |> execute input
+        |> execute (input |> List.map int64)
         |> (fun x -> x.Output)

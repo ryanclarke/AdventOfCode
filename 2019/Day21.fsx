@@ -12,12 +12,12 @@ let program =
 let solve text =
     let input = 
         text
-        |> Seq.map (char >> int)
+        |> Seq.map (char >> int64)
         |> Seq.toList
-        |> List.filter (fun i -> i <> 13)
+        |> List.filter (fun i -> i <> 13L)
         |> List.tail
     let output = (IntcodeComputer.run input program)
-    output |> List.rev |> List.map char |> cstring |> dump
+    //output |> List.rev |> List.collect (fun i -> if i > 256L then string i |> List.ofSeq else [char i]) |> cstring |> dump
     output.Head |> int
 
 // ===================================================================================================================
@@ -44,64 +44,54 @@ WALK
 // 2019.21 B
 // ===================================================================================================================
 
-let testJump expected s = 
+"
+NOT A J
+NOT B T
+OR T J
+NOT C T
+OR T J
+AND D J
+NOT E T
+AND E T
+OR E T
+OR H T
+AND T J
+RUN
+" |> solve |> solution "21b" 1141066762
+
+let testJump shouldJump s = 
     let (J,T,A,B,C,D,E,F,G,H,I) = (0,1,2,3,4,5,6,7,8,9,10)
-    let r = false::false::(s |> Seq.map (fun c -> c = '#') |> Seq.toList) |> Array.ofList |> dumpr
+    let r = false::false::(s |> Seq.map (fun c -> c = '#') |> Seq.toList) |> Array.ofList
     
     let AND x y = r.[y] <- r.[x] && r.[y]
     let NOT x y = r.[y] <- not r.[x]
     let OR x y = r.[y] <- r.[x] || r.[y]
 
-    let setFalse y =
-        NOT A y
-        AND A y
-
-    let setTrue y =
-        NOT A y
-        OR A y
- 
-    setFalse T
-
-    NOT A T
-    AND A T
-    NOT D J
-    OR J T
-    NOT H J
-    OR J T
-    NOT C J
-    OR J T
-    AND D T
     NOT A J
-    AND A J
-    OR E J
-    OR H J
+    NOT B T
+    OR T J
+    NOT C T
+    OR T J
+    AND D J
+    NOT E T
+    AND E T
+    OR E T
+    OR H T
     AND T J
 
+    r.[J] = shouldJump,s
 
-    printfn "%b %b" (r.[J] = expected)  r.[J]
-
-
-
-testJump false "####.#.##" // ####.#.##.#.####
-testJump false "####..#.#" // #####..#.########
-
-
-
-
-"
-NOT A J
-OR J T
-NOT D J
-OR J T
-NOT H J
-OR J T
-NOT C J
-OR J T
-AND D T
-NOT A J
-AND A J
-OR E J
-OR H J
-AND T J
-RUN
-" |> solve |> solution "21b" 0
+[
+(false,"####.#.##");
+(false,"####..#.#");
+(false,"..#.#####");
+(false,"###..#.##");
+(false,"##..#.###");
+(false,"##.#.##.#");
+(true, ".#.##.#.#");
+(true, "#.##...##");
+]
+|> List.map (fun (exp,s) -> testJump exp s)
+// |> dumpr
+|> List.forall fst
+|> solution "21b.1" true

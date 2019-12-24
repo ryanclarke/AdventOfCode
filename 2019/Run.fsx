@@ -20,9 +20,10 @@ open Base
 #load "Day17.fsx"
 // #load "Day18.fsx"
 #load "Day19.fsx"
-#load "Day20.fsx"
+// #load "Day20.fsx"
 #load "Day21.fsx"
 #load "Day22.fsx"
 #load "Day23.fsx"
+#load "Day24.fsx"
 
 solution "All" 0 0

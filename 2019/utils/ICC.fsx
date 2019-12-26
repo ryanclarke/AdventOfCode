@@ -123,8 +123,8 @@ module IntcodeComputer =
         | Wait -> {Memory = memory; InstructionPointer = instructionPointer; RelativeBase = relativeBase; Output = output; Halted = false}
         | Continue -> failwith "Should be continuing"
     
-    let run (input:int list) (memory: int64[]) =
+    let run (input:int64 list) (memory: int64[]) =
         memory
         |> init
-        |> execute (input |> List.map int64)
+        |> execute input
         |> (fun x -> x.Output)

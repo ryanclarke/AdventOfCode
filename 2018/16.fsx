@@ -67,7 +67,7 @@ let opLookup =
         |> Seq.fold (fun state ops -> 
             let (disc:Set<string>),o = state
             let op,s = ops
-            let newS = s |> Seq.filter (fun x -> disc.Contains x |> not) |> Seq.toList
+            let newS = s |> Seq.filter (disc.Contains >> not) |> Seq.toList
             if (newS.Length = 1)
             then ((disc.Add s.Head),(op,newS)::o)
             else (disc,(op,newS)::o)

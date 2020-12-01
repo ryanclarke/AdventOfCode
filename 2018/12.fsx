@@ -6,7 +6,7 @@ let parseToBool c =
 
 let parseToBools (input:string) =
     input
-    |> Seq.map (fun c -> parseToBool c)
+    |> Seq.map parseToBool
     |> List.ofSeq
 
 let parseNote (input:string) =

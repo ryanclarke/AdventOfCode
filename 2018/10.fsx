@@ -32,10 +32,10 @@ let update state i =
 
 let printIt state =
     let lights = state.Lights |> Array.map (fun x -> x.Position)
-    let l = (lights |> Array.minBy (fun x -> fst x)) |> fst
-    let t = (lights |> Array.minBy (fun x -> snd x)) |> snd
-    let r = (lights |> Array.maxBy (fun x -> fst x)) |> fst
-    let b = (lights |> Array.maxBy (fun x -> snd x)) |> snd
+    let l = (lights |> Array.minBy fst) |> fst
+    let t = (lights |> Array.minBy snd) |> snd
+    let r = (lights |> Array.maxBy fst) |> fst
+    let b = (lights |> Array.maxBy snd) |> snd
     let ons =
         lights |> Set.ofSeq
     [| t .. b |]

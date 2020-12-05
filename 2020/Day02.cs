@@ -7,7 +7,7 @@ using CliFx.Attributes;
 
 namespace AoC2020
 {
-    [Command(name: "day02")]
+    [Command("day02")]
     public class Day02 : ICommand
     {
         public ValueTask ExecuteAsync(IConsole console)

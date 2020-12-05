@@ -7,7 +7,7 @@ using CliFx.Attributes;
 
 namespace AoC2020
 {
-    [Command(name: "day03")]
+    [Command("day03")]
     public class Day03 : ICommand
     {
         private static readonly List<string> Input = File

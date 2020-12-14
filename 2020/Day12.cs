@@ -54,51 +54,51 @@ namespace AoC2020
                         Act a => UpdateShip((Heading) a, ship, instruction.value)
                     }
                 );
-            ship.Dump();
             (Math.Abs(ship.x) + Math.Abs(ship.y)).Dump();
         }
 
         private void PartB(string[] input)
         {
-            var shipStatus = input
-                .Select(l => Regex.Match(l, @"^(?<action>[NSEWLRF])(?<value>\d+)"))
-                .Select(m => new Instruction(
-                    Enum.Parse<Act>(m.Groups["action"].Value),
-                    int.Parse(m.Groups["value"].Value)))
-                .Aggregate(
-                    new ShipStatus(1, 10, 0, 0),
-                    (s, i) => i.action switch
-                        {
-                            Act.N => new ShipStatus(s.hy + i.value, s.hx, s.sy, s.sx),
-                            Act.S => new ShipStatus(s.hy - i.value, s.hx, s.sy, s.sx),
-                            Act.E => new ShipStatus(s.hy, s.hx + i.value, s.sy, s.sx),
-                            Act.W => new ShipStatus(s.hy, s.hx - i.value, s.sy, s.sx),
-                            Act.F => new ShipStatus(s.hy, s.hx, s.sy + (s.hy * i.value), s.sx + (s.hx * i.value)),
-                            Act.L => (i.value switch
-                            {
-                                90 => new ShipStatus(s.hx, -s.hy, s.sy, s.sx),
-                                180 => new ShipStatus(-s.hy, -s.hx, s.sy, s.sx),
-                                270 => new ShipStatus(-s.hx, s.hy, s.sy, s.sx),
-                                _ => throw new Exception("Wrong angle")
-                            }),
-                            Act.R => (i.value switch
-                            {
-                                90 => new ShipStatus(-s.hx, s.hy, s.sy, s.sx),
-                                180 => new ShipStatus(-s.hy, -s.hx, s.sy, s.sx),
-                                270 => new ShipStatus(s.hx, -s.hy, s.sy, s.sx),
-                                _ => throw new Exception("Wrong angle")
-                            })
-                        });
-            shipStatus.Dump();
+            var shipStatus = new ShipStatus(1, 10, 0, 0);
+            foreach (var l in input)
+            {
+                var m = Regex.Match(l, @"^(?<action>[NSEWLRF])(?<value>\d+)");
+                var instruction = new Instruction(Enum.Parse<Act>(m.Groups["action"].Value), int.Parse(m.Groups["value"].Value));
+                shipStatus = instruction.action switch
+                {
+                    Act.N => new ShipStatus(shipStatus.hy + instruction.value, shipStatus.hx, shipStatus.sy, shipStatus.sx),
+                    Act.S => new ShipStatus(shipStatus.hy - instruction.value, shipStatus.hx, shipStatus.sy, shipStatus.sx),
+                    Act.E => new ShipStatus(shipStatus.hy, shipStatus.hx + instruction.value, shipStatus.sy, shipStatus.sx),
+                    Act.W => new ShipStatus(shipStatus.hy, shipStatus.hx - instruction.value, shipStatus.sy, shipStatus.sx),
+                    Act.F => new ShipStatus(shipStatus.hy, shipStatus.hx, shipStatus.sy + (shipStatus.hy * instruction.value), shipStatus.sx + (shipStatus.hx * instruction.value)),
+                    Act.L => (instruction.value switch
+                    {
+                        90 => new ShipStatus(shipStatus.hx, -shipStatus.hy, shipStatus.sy, shipStatus.sx),
+                        180 => new ShipStatus(-shipStatus.hy, -shipStatus.hx, shipStatus.sy, shipStatus.sx),
+                        270 => new ShipStatus(-shipStatus.hx, shipStatus.hy, shipStatus.sy, shipStatus.sx),
+                        _ => throw new ArgumentOutOfRangeException("Wrong angle")
+                    }),
+                    Act.R => (instruction.value switch
+                    {
+                        90 => new ShipStatus(-shipStatus.hx, shipStatus.hy, shipStatus.sy, shipStatus.sx),
+                        180 => new ShipStatus(-shipStatus.hy, -shipStatus.hx, shipStatus.sy, shipStatus.sx),
+                        270 => new ShipStatus(shipStatus.hx, -shipStatus.hy, shipStatus.sy, shipStatus.sx),
+                        _ => throw new ArgumentOutOfRangeException("Wrong angle")
+                    }),
+                    _ => throw new ArgumentOutOfRangeException("Wrong action")
+                };
+            }
+
             (Math.Abs(shipStatus.sx) + Math.Abs(shipStatus.sy)).Dump();
         }
 
-        private Ship UpdateShip(Heading heading, Ship ship, int value) => heading switch
+        private static Ship UpdateShip(Heading heading, Ship ship, int value) => heading switch
         {
             Heading.E => ship with {x = ship.x + value},
             Heading.W => ship with {x = ship.x - value},
             Heading.N => ship with {y = ship.y + value},
-            Heading.S => ship with {y = ship.y - value}
+            Heading.S => ship with {y = ship.y - value},
+            _ => throw new ArgumentOutOfRangeException(nameof(heading), heading, null)
         };
 
         private enum Act

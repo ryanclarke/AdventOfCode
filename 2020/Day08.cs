@@ -70,7 +70,7 @@ namespace AoC2020
             }
             return (accumulator, pointer >= instructions.Count);
         }
-    }
 
-    public record Instruction(string Op, int Arg);
+        private record Instruction(string Op, int Arg);
+    }
 }

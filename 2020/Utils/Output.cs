@@ -15,5 +15,7 @@ namespace AoC2020.Utils
             action(input);
             return input;
         }
+
+        public static T2 Map<T1, T2>(this T1 input, Func<T1, T2> func) => func(input);
     }
 }

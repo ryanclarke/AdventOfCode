@@ -70,9 +70,9 @@ namespace AoC2020
 
             return new Rule(outer, inners);
         }
-    }
 
-    public record Edge(string Outer, string Inner, int Number);
-    public record Rule(string Style, List<Contents> Contents);
-    public record Contents(int Number, string Style);
+        public record Edge(string Outer, string Inner, int Number);
+        public record Rule(string Style, List<Contents> Contents);
+        public record Contents(int Number, string Style);
+    }
 }

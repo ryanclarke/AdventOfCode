@@ -16,6 +16,7 @@ public static class Extensions
         return input;
     }
 
+    public static string Stringify(this IEnumerable<char> chars) => new(chars.ToArray());
     public static string JoinStrings(this IEnumerable<string> strings, string separator = "") => separator == "" ? string.Concat(strings) : string.Join(separator, strings);
     public static string JoinLines(this IEnumerable<string> strings, int newLines = 1) => strings.JoinStrings(Environment.NewLine.Times(newLines));
     public static string Times(this string s, int i) => Enumerable.Repeat(s, i).JoinStrings();

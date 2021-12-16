@@ -11,7 +11,7 @@ public class Day03
         var gamma = Enumerable.Range(0, 12)
             .Select(i => input.Count(n => n[i] == '1') > 500 ? "1" : "0")
             .JoinStrings()
-            .λ(s => Convert.ToInt32(s, 2));
+            .X(s => Convert.ToInt32(s, 2));
         var epsilon = (int)Math.Pow(2, 12) - 1 - gamma;
 
         (gamma * epsilon).Dump("3a (2648450): ");
@@ -27,7 +27,7 @@ public class Day03
     {
         if (list.Count == 1)
         {
-            return list.Single().λ(s => Convert.ToInt32(s, 2));
+            return list.Single().X(s => Convert.ToInt32(s, 2));
         }
         var b = compare(list.Count(n => n[index] == '1'), list.Count(n => n[index] == '0'));
         return FindRatingNumber(list.Where(n => n[index] == b).ToList(), index + 1, compare);

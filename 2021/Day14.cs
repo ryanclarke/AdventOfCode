@@ -16,7 +16,7 @@ public static class Day14
         PolymerResult(input.First().ToList(), 10)
             .PolymerCounts()
             .Select(t => t.Count)
-            .λ(counts => counts.Max() - counts.Min())
+            .X(counts => counts.Max() - counts.Min())
             .Dump("14a (3555): ");
 
         var ruleCounts = PairInsertionRules.ToDictionary(r => r.Key, r => PolymerResult(r.Key, 21).PolymerCounts(true));
@@ -31,7 +31,7 @@ public static class Day14
         var list = counts
             .GroupBy(t => t.Element)
             .Select(g => g.Sum(t => t.Count))
-            .λ(counts => counts.Max() - counts.Min())
+            .X(counts => counts.Max() - counts.Min())
             .Dump("14b (4439442043739): ");
     }
     public static List<char> PolymerResult(this (char E1, char E2) rule, int steps) =>
@@ -55,7 +55,7 @@ public static class Day14
 
     public static List<(char Element, double Count)> PolymerCounts(this List<char> polymer, bool removeLast = false) =>
         polymer
-            .λ(p => removeLast ? p.Take(p.Count - 1) : p)
+            .X(p => removeLast ? p.Take(p.Count - 1) : p)
             .GroupBy(c => c)
             .Select(g => (g.Key, (double) g.LongCount()))
             .ToList();

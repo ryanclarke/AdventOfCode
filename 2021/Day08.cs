@@ -9,7 +9,7 @@ public class Day08
                 .Select(l => l.Split(" | ", StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries)
                     .Select(h => h.Split(' ', StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries))
                     .ToArray()
-                    .λ(p => (Patterns: p[0], Output: p[1])))
+                    .X(p => (Patterns: p[0], Output: p[1])))
                 .ToList();
 
         input.SelectMany(t => t.Output)
@@ -56,7 +56,7 @@ public class Day08
                     { _9, '9' }
                 };
 
-                return new string(t.Output.Select(o => new string(o.OrderBy(x => x).ToArray())).Select(x => d[x]).ToArray()).λ(int.Parse);
+                return new string(t.Output.Select(o => new string(o.OrderBy(x => x).ToArray())).Select(x => d[x]).ToArray()).X(int.Parse);
             })
             .Dump("8b (986179): ");
     }

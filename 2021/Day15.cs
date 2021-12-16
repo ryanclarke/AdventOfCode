@@ -28,7 +28,7 @@ public static class Day15
                 .Select(t => (
                     Coord: new Point(t.Coord.X + (offset.X * width), 
                                      t.Coord.Y + (offset.Y * height)), 
-                    Risk: ((t.Risk + offset.X + offset.Y) % 9).λ(i => i == 0 ? 9 : i))))
+                    Risk: ((t.Risk + offset.X + offset.Y) % 9).X(i => i == 0 ? 9 : i))))
             .ToList();
         var graph = tuples
                     .ToDictionary(t => t.Coord, t => t.Risk);

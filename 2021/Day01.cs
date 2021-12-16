@@ -14,7 +14,7 @@ public class Day01
                 input.Take(1..))
             .Select(t => t.Second > t.First)
             .Count(x => x)
-            .Dump("1a: ");
+            .Dump("1a (1752): ");
 
         var sums = Enumerable.Zip(
                 input.Take(..^2),
@@ -27,6 +27,6 @@ public class Day01
                 sums.Take(1..))
             .Select(t => t.Second > t.First)
             .Count(x => x)
-            .Dump("1b: ");
+            .Dump("1b (1781): ");
     }
 }

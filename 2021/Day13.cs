@@ -10,11 +10,11 @@ public class Day13
 
         var points = input
             .Where(line => line.Contains(','))
-            .Select(line => line.Split(',').λ(a => new Point(X: int.Parse(a[0]), Y: int.Parse(a[1]))))
+            .Select(line => line.Split(',').X(a => new Point(X: int.Parse(a[0]), Y: int.Parse(a[1]))))
             .ToHashSet();
         var folds = input
             .Where(line => line.StartsWith("fold along"))
-            .Select(line => line.Split('=').λ(a => (
+            .Select(line => line.Split('=').X(a => (
                 Orientation: a[0].Last().ToString(), 
                 Line: int.Parse(a[1]))))
             .ToList();

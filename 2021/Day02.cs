@@ -6,7 +6,7 @@ public class Day02
     {
         var input = File
                 .ReadAllLines("../../../input/02.txt")
-                .Select(s => s.Split(' ').λ(ss => new Command(Enum.Parse<Direction>(ss[0]), ss[1].λ(int.Parse))))
+                .Select(s => s.Split(' ').X(ss => new Command(Enum.Parse<Direction>(ss[0]), ss[1].X(int.Parse))))
                 .ToList();
 
         input.Select(c => c.Direction switch
@@ -17,7 +17,7 @@ public class Day02
                 _ => (0, 0)
             })
             .Aggregate((0, 0), (a, t) => (a.Item1 + t.Item1, a.Item2 + t.Item2), a => a.Item1 * a.Item2)
-            .Dump("2a: ");
+            .Dump("2a (1635930): ");
 
 
         input.Aggregate(new State(0, 0, 0), (s, c) => c.Direction switch
@@ -27,7 +27,7 @@ public class Day02
             Direction.down => s with { Aim = s.Aim + c.Distance },
             _ => s
         }, s => s.H * s.D)
-        .Dump("2b: ");
+        .Dump("2b (1781819478): ");
     }
 
     private enum Direction

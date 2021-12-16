@@ -12,7 +12,7 @@ public static class Day16
         //ParseTransmission("620080001611562C8802118E34").λ(VersionsSum).Dump("12: ");
         //ParseTransmission("C0015000016115A2E0802F182340").λ(VersionsSum).Dump("23: ");
         //ParseTransmission("A0016C880162017C3686B18A3D4780").λ(VersionsSum).Dump("31: ");
-        ParseTransmission(input).λ(VersionsSum).Dump("16a (996): ");
+        ParseTransmission(input).X(VersionsSum).Dump("16a (996): ");
 
         //ParseTransmission("C200B40A82").λ(Solve).Dump("3: ");
         //ParseTransmission("04005AC33890").λ(Solve).Dump("54: ");
@@ -22,7 +22,7 @@ public static class Day16
         //ParseTransmission("F600BC2D8F").λ(Solve).Dump("0: ");
         //ParseTransmission("9C005AC2F8F0").λ(Solve).Dump("0: ");
         //ParseTransmission("9C0141080250320F1802104A08").λ(Solve).Dump("1: ");
-        ParseTransmission(input).λ(Solve).Dump("16b (96257984154): ");
+        ParseTransmission(input).X(Solve).Dump("16b (96257984154): ");
     }
 
     private static Packet ParseTransmission(string transmission)
@@ -80,7 +80,7 @@ public static class Day16
             return Convert.ToInt64(value, 2);
         }
         string BitsSegment(int count) => bits!.Skip(ptr).Take(count).Stringify().T(_ => ptr += count);
-        int Segment(int count) => BitsSegment(count).λ(s => Convert.ToInt32(s, 2));
+        int Segment(int count) => BitsSegment(count).X(s => Convert.ToInt32(s, 2));
     }
 
     private static long VersionsSum(Packet p) => p switch
@@ -99,9 +99,9 @@ public static class Day16
             1 => o.Subpackets.Aggregate(1L, (a, x) => a * Solve(x)),
             2 => o.Subpackets.Select(Solve).Min(),
             3 => o.Subpackets.Select(Solve).Max(),
-            5 => o.Subpackets.Select(Solve).λ(ps => ps.First() > ps.Last() ? 1L : 0L),
-            6 => o.Subpackets.Select(Solve).λ(ps => ps.First() < ps.Last() ? 1L : 0L),
-            7 => o.Subpackets.Select(Solve).λ(ps => ps.First() == ps.Last() ? 1L : 0L),
+            5 => o.Subpackets.Select(Solve).X(ps => ps.First() > ps.Last() ? 1L : 0L),
+            6 => o.Subpackets.Select(Solve).X(ps => ps.First() < ps.Last() ? 1L : 0L),
+            7 => o.Subpackets.Select(Solve).X(ps => ps.First() == ps.Last() ? 1L : 0L),
             _ => throw new ArgumentException(nameof(o.TypeId))
         },
         _ => throw new InvalidDataException()

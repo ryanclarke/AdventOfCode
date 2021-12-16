@@ -35,11 +35,11 @@ public class Day04
                 var score = bingo.Spaces.Where(s => !drawn.Contains(s)).Sum() * drawn.Last();
                 if (boards.Count == 99)
                 {
-                    score.Dump("4a: ");
+                    score.Dump("4a (16674): ");
                 }
                 if (boards.Count == 0)
                 {
-                    score.Dump("4b: ");
+                    score.Dump("4b (7075): ");
                 }
             }
         }

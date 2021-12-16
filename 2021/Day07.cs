@@ -16,7 +16,7 @@ public class Day07
                .Dump("7a (325528): ");
 
         Enumerable.Range(0, input.Max())
-               .Min(x => input.Sum(i => Math.Abs(i - x).λ(a => (Math.Pow(a, 2) + a) / 2)))
+               .Min(x => input.Sum(i => Math.Abs(i - x).X(a => (Math.Pow(a, 2) + a) / 2)))
                .Dump("7b (85015836): ");
     }
 }

@@ -6,9 +6,9 @@ public class Day05
     {
         var input = File
                 .ReadAllLines("../../../input/05.txt")
-                .Select(line => line.Split(" -> ").λ(x => (
-                    x[0].Split(',').λ(a => (int.Parse(a[0]), int.Parse(a[1]))), 
-                    x[1].Split(',').λ(a => (int.Parse(a[0]), int.Parse(a[1]))))))
+                .Select(line => line.Split(" -> ").X(x => (
+                    x[0].Split(',').X(a => (int.Parse(a[0]), int.Parse(a[1]))), 
+                    x[1].Split(',').X(a => (int.Parse(a[0]), int.Parse(a[1]))))))
                 .ToList();
 
         input.SelectMany(p => p switch

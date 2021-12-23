@@ -20,4 +20,6 @@ public static class Extensions
     public static string JoinStrings(this IEnumerable<string> strings, string separator = "") => separator == "" ? string.Concat(strings) : string.Join(separator, strings);
     public static string JoinLines(this IEnumerable<string> strings, int newLines = 1) => strings.JoinStrings(Environment.NewLine.Times(newLines));
     public static string Times(this string s, int i) => Enumerable.Repeat(s, i).JoinStrings();
+
+    public static int Moduloop(this int i, int number) => (i % number).X(n => n == 0 ? number : n);
 }

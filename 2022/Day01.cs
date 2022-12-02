@@ -1,18 +1,21 @@
-﻿namespace AoC2022;
+﻿using static AoC2022.Utils;
+
+namespace AoC2022;
 
 public class Day01
 {
+    private static readonly string InputFilePath = $"{Config.InputRoot}/01.txt";
     public static void Run()
     {
-        PatternMatchingAggregater();
+        PatternMatchingAggregator();
         ForeachLoop();
         SplitOnNewLines();
     }
 
-    private static void PatternMatchingAggregater()
+    private static void PatternMatchingAggregator()
     {
         File
-            .ReadAllLines("../../../input/01.txt")
+            .ReadAllLines(InputFilePath)
             .Select(line => line switch
             {
                 "" => 0,
@@ -32,7 +35,7 @@ public class Day01
                     return elves;
                 }
             })
-            .OrderByDescending(Extensions.ID)
+            .OrderByDescending(ID)
             .ToArray()
             .T(elves => elves.Take(1).Sum().Dump("01a (72017): "))
             .T(elves => elves.Take(3).Sum().Dump("01b (212520): "));
@@ -40,7 +43,7 @@ public class Day01
 
     private static void ForeachLoop()
     {
-        var input = File.ReadAllLines("../../../input/01.txt");
+        var input = File.ReadAllLines(InputFilePath);
         var calories = 0;
         var elves = new List<int>();
         foreach (var item in input)
@@ -56,7 +59,7 @@ public class Day01
             }
         }
 
-        elves = elves.OrderByDescending(x => x).ToList();
+        elves = elves.OrderByDescending(ID).ToList();
         elves.Take(1).Sum().Dump("01a (72017): ");
         elves.Take(3).Sum().Dump("01b (212520): ");
     }
@@ -64,13 +67,13 @@ public class Day01
     private static void SplitOnNewLines()
     {
         var input = File
-            .ReadAllText("../../../input/01.txt")
+            .ReadAllText(InputFilePath)
             .Split("\n\n", StringSplitOptions.RemoveEmptyEntries)
             .Select(elf => elf
                 .Split("\n", StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .Sum())
-            .OrderByDescending(x => x)
+            .OrderByDescending(ID)
             .ToList();
 
         input.First().Dump("01a (72017): ");

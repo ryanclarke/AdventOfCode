@@ -2,7 +2,6 @@
 
 public static class Extensions
 {
-    public static T ID<T>(this T input) => input;
     public static T T<T>(this T input, Action<T> action)
     {
         action(input);

@@ -1,6 +1,4 @@
-﻿using static AoC2022.Utils;
-
-namespace AoC2022;
+﻿namespace AoC2022;
 
 public class Day01
 {

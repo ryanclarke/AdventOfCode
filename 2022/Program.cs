@@ -13,7 +13,7 @@ if (!args.Any())
 }
 else
 {
-    Environment.CurrentDirectory = "C:/dev/AdventofCode/2022/bin/Debug/net6.0/";
+    Environment.CurrentDirectory = "C:/dev/AdventofCode/2022/bin/Debug/net7.0/";
 
     if (int.TryParse(args[0], out int dayNumber))
     {

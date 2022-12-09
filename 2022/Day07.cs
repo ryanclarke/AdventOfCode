@@ -14,13 +14,13 @@ public class Day07
         var allDirs = new List<Directory>{root};
         foreach (var line in input)
         {
-            var _ = line.Split() switch
+            pwd = line.Split() switch
             {
                 ["$", "cd", var name] => name switch
                 {
-                    "/" => pwd = root,
-                    ".." => pwd = pwd.Parent,
-                    _ => pwd = pwd.Directories.Single(d => d.Name == name)
+                    "/" => root,
+                    ".." => pwd.Parent,
+                    _ => pwd.Directories.Single(d => d.Name == name)
                 },
                 ["$", ..] => pwd,
                 ["dir", var name] => new Directory(name, pwd)

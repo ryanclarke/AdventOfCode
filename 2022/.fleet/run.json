@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "Run "AoC2022" (net7.0)",
+            "type": "dotnet",
+            "allowParallelRun": "true",
+            "projectPath": "C:\\dev\\AdventOfCode\\2022\\AoC2022.csproj",
+            "exePath": "C:\\dev\\AdventOfCode\\2022\\bin\\Debug\\net7.0\\AoC2022.exe",
+            "args": [],
+        },
+    ]
+}

@@ -27,7 +27,13 @@ else
 
 static void RunDay(Type? day)
 {
+    var stopwatch = Stopwatch.StartNew();
+    
     day?.GetMethod("Run")?.Invoke(day, null);
+    
+    stopwatch.Stop();
+    Console.WriteLine();
+    stopwatch.Elapsed.Dump($"{day?.Name} Elapsed: ");
 }
 
 public static class Config {

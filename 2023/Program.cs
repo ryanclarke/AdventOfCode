@@ -1,6 +1,6 @@
 ﻿global using System.Diagnostics;
+global using System.Collections.Generic;
 global using System.Text.RegularExpressions;
-
 
 var days = System.Reflection.Assembly
     .GetExecutingAssembly()

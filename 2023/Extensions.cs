@@ -18,6 +18,7 @@
     public static string JoinStrings(this IEnumerable<string> strings, string separator = "") => separator == "" ? string.Concat(strings) : string.Join(separator, strings);
     public static string JoinLines(this IEnumerable<string> strings, int newLines = 1) => strings.JoinStrings(Environment.NewLine.Times(newLines));
     public static string Times(this string s, int i) => Enumerable.Repeat(s, i).JoinStrings();
+    public static string[] Arrayify(this string a) => a.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries);
 
     public static int Multiply(this IEnumerable<int> ints) => ints.Aggregate(1, (a, b) => a * b);
 }

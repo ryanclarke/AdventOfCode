@@ -8,7 +8,7 @@
             .ToList();
     
     var cards = input
-      .Select(l => MultipleWhitespace().Replace(l, " ").Split(':', '|')
+      .Select(l => l.RemoveMultipleWhitespace().Split(':', '|')
         .X(a => a[1].Arrayify().Intersect(a[2].Arrayify()).Count()))
       .ToList();
 
@@ -25,7 +25,4 @@
       .Sum()
       .Dump("04b [11024379]: ");
   }
-
-  [GeneratedRegex(" +")]
-  private static partial Regex MultipleWhitespace();
 }

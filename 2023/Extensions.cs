@@ -21,4 +21,5 @@
     public static string[] Arrayify(this string a) => a.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries);
 
     public static int Multiply(this IEnumerable<int> ints) => ints.Aggregate(1, (a, b) => a * b);
+    public static long Multiply(this IEnumerable<long> longs) => longs.Aggregate(1L, (a, b) => a * b);
 }

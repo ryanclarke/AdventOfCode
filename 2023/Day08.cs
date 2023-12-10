@@ -44,7 +44,5 @@
       finalSteps.Add(ghostSteps);
     }
     finalSteps.Multiply().Dump("08b [11188774513823]: "); // Replace with LCM
-
-    int y = 12;
   }
 }
